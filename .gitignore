@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+.conda/
+
+# uv / packaging
+*.egg-info/
+dist/
+build/
+
+# Hugging Face / experiment cache
+Classification/cache/
+Classification/data/
+Classification/preprocessed/
+
+# Trained models / checkpoints
+Classification/models/
+Classification/checkpoints/
+
+# Large model files
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.onnx
+
+# Logs - ignore raw logs by default
+Classification/logs/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

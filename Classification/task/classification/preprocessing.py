@@ -401,6 +401,26 @@ def load_data(args: argparse.Namespace) -> tuple:
         valid_data['label'] = valid_df['toxic'].tolist()
         test_data['text'] = test_df['text'].tolist()
         test_data['label'] = test_df['toxic'].tolist()
+    elif name == "uit_vsfc":
+        dataset = load_dataset("uitnlp/vietnamese_students_feedback", cache_dir=args.cache_path)
+    
+        train_df = pd.DataFrame(dataset["train"])
+        valid_df = pd.DataFrame(dataset["validation"])
+        test_df = pd.DataFrame(dataset["test"])
+    
+        num_classes = 3
+    
+        text_col = "sentence"
+        label_col = "sentiment"
+    
+        train_data["text"] = train_df[text_col].astype(str).tolist()
+        train_data["label"] = train_df[label_col].astype(int).tolist()
+    
+        valid_data["text"] = valid_df[text_col].astype(str).tolist()
+        valid_data["label"] = valid_df[label_col].astype(int).tolist()
+    
+        test_data["text"] = test_df[text_col].astype(str).tolist()
+        test_data["label"] = test_df[label_col].astype(int).tolist()
         
     
     return train_data, valid_data, test_data, num_classes
