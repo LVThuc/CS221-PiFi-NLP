@@ -1,42 +1,91 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *.so
-.ipynb_checkpoints/
 
 # Environments
 .venv/
 venv/
 env/
 .env
-.conda/
+.env.*
+*.env
 
-# uv / packaging
-*.egg-info/
-dist/
-build/
+# Jupyter / cache
+.ipynb_checkpoints/
+.cache/
+.cache*/
+.cache_huggingface/
+cache/
+hf/
+.hf_home/
+*.lock
+*.incomplete
 
-# Hugging Face / experiment cache
-Classification/cache/
-Classification/data/
-Classification/preprocessed/
+# Hugging Face / datasets / model cache
+**/cache/
+**/cache/hf/
+**/.hf_home/
+**/stored_tokens
+**/token
 
-# Trained models / checkpoints
-Classification/models/
-Classification/checkpoints/
+# Training artifacts
+models/
+checkpoints/
+models_rerun/
+checkpoints_rerun/
+preprocessed/
+preprocessed_rerun/
+preprocessed_imdb_mbert/
+logs/
+preds/
+runs/
+wandb/
+outputs/
+results/
 
-# Large model files
+# Large model/checkpoint files
 *.pt
 *.pth
+*.ckpt
 *.bin
 *.safetensors
-*.ckpt
 *.onnx
+*.pkl
+*.pickle
+*.npz
+*.npy
 
-# Logs - ignore raw logs by default
+# Data generated locally
+data/
+Classification/data/
+Classification/preprocessed*/
+Classification/models*/
+Classification/checkpoints*/
 Classification/logs/
+Classification/preds/
+Classification/wandb/
 
 # OS/editor
 .DS_Store
+Thumbs.db
 .vscode/
 .idea/
+
+# LaTeX build files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb

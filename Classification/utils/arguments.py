@@ -17,10 +17,10 @@ class ArgParser():
         job_list = ['preprocessing', 'training', 'resume_training', 'testing']
         self.parser.add_argument('--job', type=str, choices=job_list, default='training',
                                  help='Job to do; Must be given.')
-        dataset_list = ['imdb', 'sst2', 'cola', 'trec', 'subj', 'agnews', 'mr', 'cr', 'proscons', 'dbpedia', 'yelp_polarity', 'tweet_offensive', 'tweet_sentiment_binary', 'yelp_full', 'yahoo_answers_title', 'yahoo_answers_full', 'nsmc', 'filmstarts','chinese_toxicity', 'uit_vsfc']
+        dataset_list = ['imdb', 'sst2', 'cola', 'trec', 'subj', 'agnews', 'mr', 'cr', 'proscons', 'dbpedia', 'yelp_polarity', 'tweet_offensive', 'tweet_sentiment_binary', 'yelp_full', 'yahoo_answers_title', 'yahoo_answers_full', 'nsmc', 'filmstarts','chinese_toxicity', 'uit_vsfc', 'chnsenticorp', 'zh_sentiment']
         self.parser.add_argument('--task_dataset', type=str, choices=dataset_list, default='sst2',
                                  help='Dataset for the task; Must be given.')
-        test_dataset_list = ['imdb', 'sst2', 'cola', 'trec', 'subj', 'agnews', 'mr', 'cr', 'proscons', 'dbpedia', 'yelp_polarity', 'tweet_offensive', 'tweet_sentiment_binary', 'yelp_full', 'yahoo_answers_title', 'yahoo_answers_full', 'nsmc', 'filmstarts','chinese_toxicity', 'uit_vsfc']
+        test_dataset_list = ['imdb', 'sst2', 'cola', 'trec', 'subj', 'agnews', 'mr', 'cr', 'proscons', 'dbpedia', 'yelp_polarity', 'tweet_offensive', 'tweet_sentiment_binary', 'yelp_full', 'yahoo_answers_title', 'yahoo_answers_full', 'nsmc', 'filmstarts','chinese_toxicity', 'uit_vsfc', 'chnsenticorp', 'zh_sentiment']
         self.parser.add_argument('--test_dataset', type=str, choices=test_dataset_list, default='yelp_full',
                                  help='Test Dataset for the task')
         self.parser.add_argument('--description', type=str, default='default',

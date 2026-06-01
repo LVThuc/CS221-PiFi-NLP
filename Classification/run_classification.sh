@@ -1,7 +1,7 @@
 TASK_LIST=(classification)
-LLM=llama3.1
-MODEL_LIST=(bert)
-CLASSIFICATION_TASK_LIST=(sst2 imdb tweet_sentiment_binary tweet_offensive cola)
+LLM=qwen2-0.5B
+MODEL_LIST=(mbert)
+CLASSIFICATION_TASK_LIST=(imdb)
 
 for TASK in ${TASK_LIST[@]}; do
     if [ $TASK == 'classification' ]; then

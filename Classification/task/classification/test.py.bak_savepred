@@ -73,9 +73,6 @@ def testing(args: argparse.Namespace) -> tuple:
     write_log(logger, f"Loss function: {cls_loss}")
 
     model = model.eval()
-
-    all_preds = []
-    all_labels = []
     test_loss_cls = 0
     test_acc_cls = 0
     test_f1_cls = 0
@@ -90,10 +87,7 @@ def testing(args: argparse.Namespace) -> tuple:
 
         batch_loss_cls = cls_loss(classification_logits, labels)
         batch_acc_cls = (classification_logits.argmax(dim=-1) == labels).float().mean()
-        preds = classification_logits.argmax(dim=-1)
-        all_preds.extend(preds.detach().cpu().numpy().tolist())
-        all_labels.extend(labels.detach().cpu().numpy().tolist())
-        batch_f1_cls = f1_score(labels.cpu().numpy(), preds.cpu().numpy(), average='macro')
+        batch_f1_cls = f1_score(labels.cpu().numpy(), classification_logits.argmax(dim=-1).cpu().numpy(), average='macro')
 
         test_loss_cls += batch_loss_cls.item()
         test_acc_cls += batch_acc_cls.item()
@@ -109,18 +103,6 @@ def testing(args: argparse.Namespace) -> tuple:
     test_f1_cls /= len(dataloader_test)
 
     write_log(logger, f"Done! - TEST - Loss: {test_loss_cls:.4f} - Acc: {test_acc_cls:.4f} - F1: {test_f1_cls:.4f}")
-
-    save_pred_path = os.environ.get("SAVE_PRED")
-    if save_pred_path:
-        os.makedirs(os.path.dirname(save_pred_path), exist_ok=True)
-        n = min(len(all_labels), len(all_preds))
-        df = pd.DataFrame({
-            "idx": list(range(n)),
-            "gold": all_labels[:n],
-            "pred": all_preds[:n],
-        })
-        df.to_csv(save_pred_path, index=False)
-        write_log(logger, f"Saved predictions to {save_pred_path}")
     if args.use_tensorboard:
         writer.add_scalar('TEST/Loss', test_loss_cls, 0)
         writer.add_scalar('TEST/Acc', test_acc_cls, 0)

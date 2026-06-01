@@ -401,6 +401,69 @@ def load_data(args: argparse.Namespace) -> tuple:
         valid_data['label'] = valid_df['toxic'].tolist()
         test_data['text'] = test_df['text'].tolist()
         test_data['label'] = test_df['toxic'].tolist()
+
+    elif name == "chnsenticorp":
+        train_df = pd.read_csv(f"{args.data_path}/chnsenticorp/train.csv")
+        valid_df = pd.read_csv(f"{args.data_path}/chnsenticorp/validation.csv")
+        test_df = pd.read_csv(f"{args.data_path}/chnsenticorp/test.csv")
+
+        num_classes = 2
+
+        train_data["text"] = train_df["text"].astype(str).tolist()
+        train_data["label"] = train_df["label"].astype(int).tolist()
+
+        valid_data["text"] = valid_df["text"].astype(str).tolist()
+        valid_data["label"] = valid_df["label"].astype(int).tolist()
+
+        test_data["text"] = test_df["text"].astype(str).tolist()
+        test_data["label"] = test_df["label"].astype(int).tolist()
+
+
+
+    elif name == "zh_sentiment":
+        dataset = load_dataset("tyqiangz/multilingual-sentiments", "chinese", cache_dir=args.cache_path)
+
+        train_df = pd.DataFrame(dataset["train"])
+        valid_df = pd.DataFrame(dataset["validation"])
+        test_df = pd.DataFrame(dataset["test"])
+
+        num_classes = 3
+
+        text_col = "text"
+        if "label" in train_df.columns:
+            label_col = "label"
+        elif "sentiment" in train_df.columns:
+            label_col = "sentiment"
+        else:
+            raise ValueError(f"Cannot find label column in zh_sentiment. Columns: {train_df.columns}")
+
+        label_map = {
+            "negative": 0, "Negative": 0, "NEGATIVE": 0,
+            "neutral": 1, "Neutral": 1, "NEUTRAL": 1,
+            "positive": 2, "Positive": 2, "POSITIVE": 2,
+        }
+
+        def map_label(x):
+            if isinstance(x, str):
+                x = x.strip()
+                if x in label_map:
+                    return label_map[x]
+                try:
+                    return int(x)
+                except ValueError:
+                    raise ValueError(f"Unknown zh_sentiment label: {x}")
+            return int(x)
+
+        train_data["text"] = train_df[text_col].astype(str).tolist()
+        train_data["label"] = train_df[label_col].map(map_label).astype(int).tolist()
+
+        valid_data["text"] = valid_df[text_col].astype(str).tolist()
+        valid_data["label"] = valid_df[label_col].map(map_label).astype(int).tolist()
+
+        test_data["text"] = test_df[text_col].astype(str).tolist()
+        test_data["label"] = test_df[label_col].map(map_label).astype(int).tolist()
+
+
     elif name == "uit_vsfc":
         dataset = load_dataset("uitnlp/vietnamese_students_feedback", cache_dir=args.cache_path)
     
